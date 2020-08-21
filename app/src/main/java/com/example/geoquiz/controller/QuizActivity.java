@@ -1,16 +1,16 @@
 package com.example.geoquiz.controller;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,8 +18,12 @@ import com.example.geoquiz.R;
 import com.example.geoquiz.model.Question;
 
 
-public class MainActivity extends AppCompatActivity {
+public class QuizActivity extends AppCompatActivity {
     public static final String TAG = "Listener ";
+    private static final String BUNDLE_KEY_CURRENT_INDEX ="currentIndex" ;
+    private static final String BUNDLE_KEY_SCORE = "score";
+    private static final String BUNDLE_KEY_GAME_STATE ="gameState" ;
+    private static final String BUNDLE_KEY_IS_ANSWERED ="isAnswered" ;
     private ImageButton mButtonTrue;
     private ImageButton mButtonFalse;
     private ImageButton mButtonNext;
@@ -27,16 +31,16 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mButtonFirst;
     private ImageButton mButtonLast;
     private ImageButton mButtonReset;
-    LinearLayout mLinearLayoutMain;
+    //LinearLayout mLinearLayoutMain;
 
     private TextView mQuestionTextView;
     private EditText mScoreEditText;
 
     private int mCurrentIndex = 0;
     private int mGameState = 0;
-    private int score = 0;
+    private int mScore = 0;
 
-    private boolean[] isAnswered = new boolean[6];
+    private boolean[] mIsAnswered = new boolean[6];
     private Question[] mQuestionBank = {
             new Question(R.string.question_australia, false),
             new Question(R.string.question_oceans, true),
@@ -51,11 +55,32 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        if (savedInstanceState != null) {
+            Log.d(TAG, "savedInstanceState: " + savedInstanceState);
+
+            mCurrentIndex = savedInstanceState.getInt(BUNDLE_KEY_CURRENT_INDEX, 0);
+            mGameState=savedInstanceState.getInt(BUNDLE_KEY_GAME_STATE,0);
+            mScore =savedInstanceState.getInt(BUNDLE_KEY_SCORE,0);
+            mIsAnswered= savedInstanceState.getBooleanArray(BUNDLE_KEY_IS_ANSWERED);
+
+        }
+        setContentView(R.layout.activity_quiz);
         findView();
         setListener();
         updateQuestion();
 
+    }
+
+    /******************************** ON SAVE INSTANCE STATE *******************/
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        //Log.d(TAG, "onSaveInstanceState: " + mCurrentIndex);
+
+        outState.putInt(BUNDLE_KEY_CURRENT_INDEX, mCurrentIndex);
+        outState.putInt(BUNDLE_KEY_SCORE, mScore);
+        outState.putInt(BUNDLE_KEY_GAME_STATE, mGameState);
+        outState.putBooleanArray(BUNDLE_KEY_IS_ANSWERED, mIsAnswered);
     }
 
     /*************************** FIND VIEW **********************************************/
@@ -76,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-       mLinearLayoutMain = findViewById(R.id.linearLayout_main);
+       //mLinearLayoutMain = findViewById(R.id.linearLayout_main);
 
 
 
@@ -90,13 +115,13 @@ public class MainActivity extends AppCompatActivity {
         mButtonTrue.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isAnswered[mCurrentIndex] == false) {
+                if (mIsAnswered[mCurrentIndex] == false) {
 
                     checkAnswer(true);
-                    isAnswered[mCurrentIndex] = true;
+                    mIsAnswered[mCurrentIndex] = true;
                     mGameState++;
                     myButtonsDisable();
-                }
+               }
 
 
                 /*Toast toast=new Toast(MainActivity.this);
@@ -115,10 +140,10 @@ public class MainActivity extends AppCompatActivity {
         mButtonFalse.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (isAnswered[mCurrentIndex] == false) {
+               if (mIsAnswered[mCurrentIndex] == false) {
 
                     checkAnswer(false);
-                    isAnswered[mCurrentIndex] = true;
+                    mIsAnswered[mCurrentIndex] = true;
                     mGameState++;
                     myButtonsDisable();
                 }
@@ -183,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
             int questionTextResId = mQuestionBank[mCurrentIndex].getQuestionTextResId();
             mQuestionTextView.setText(questionTextResId);
 
-            if (isAnswered[mCurrentIndex] == false) {
+            if (mIsAnswered[mCurrentIndex] == false) {
                 myButtonsEnable();
             }
 
@@ -203,7 +228,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 mCurrentIndex = 0;
-                setContentView(R.layout.activity_main);
+                setContentView(R.layout.activity_quiz);
                 findView();
                 setListener();
                 updateQuestion();
@@ -252,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
 
         if (mQuestionBank[mCurrentIndex].isAnswerTrue() == userPressed) {
             updateScore();
-            Toast toast = Toast.makeText(MainActivity.this,
+            Toast toast = Toast.makeText(QuizActivity.this,
                     R.string.toast_true, Toast.LENGTH_LONG);
 
             View toastView = toast.getView();
@@ -265,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else {
 
-            Toast toast = Toast.makeText(MainActivity.this,
+            Toast toast = Toast.makeText(QuizActivity.this,
                     R.string.toast_false, Toast.LENGTH_LONG);
 
             toast.setGravity(Gravity.TOP, 0, 60);
@@ -283,8 +308,8 @@ public class MainActivity extends AppCompatActivity {
     /******************************* UPDATE SCORE *************************/
 
     private void updateScore() {
-        score++;
+        mScore++;
 
-        mScoreEditText.setText(String.valueOf(score));
+        mScoreEditText.setText(String.valueOf(mScore));
     }
 }
