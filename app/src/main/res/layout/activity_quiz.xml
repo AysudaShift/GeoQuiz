@@ -9,6 +9,13 @@
     android:orientation="vertical"
     tools:context=".controller.QuizActivity">
 
+    <ImageButton
+        android:id="@+id/imgBtn_setting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        app:srcCompat="@drawable/simple_setting_icon" />
+
     <LinearLayout
         android:id="@+id/linrearLayout_score"
         android:layout_width="wrap_content"
@@ -40,6 +47,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
+        android:textColor="#1B1818"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -105,10 +113,11 @@
     </LinearLayout>
 
     <ImageButton
-        android:id="@+id/imageButton"
+        android:id="@+id/imgBtn_cheat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:tint="#BD0F0F"
         app:srcCompat="@drawable/simple_cheat_icon" />
 
 </LinearLayout>

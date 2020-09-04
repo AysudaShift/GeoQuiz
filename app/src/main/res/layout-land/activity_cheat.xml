@@ -10,7 +10,7 @@
         android:id="@+id/txtview_warning"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="10dp"
         android:padding="8dp"
         android:text="@string/textView_cheat_warning"
         android:textSize="24sp" />
@@ -19,7 +19,7 @@
         android:id="@+id/txtview_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="10dp"
         android:padding="8dp"
         android:textColor="#4CAF50"
         android:textSize="24sp"
@@ -29,7 +29,7 @@
         android:id="@+id/imgBtn_show_answer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="8dp"
+        android:layout_margin="10dp"
         android:padding="8dp"
         android:tint="#E31D0E"
         app:srcCompat="@drawable/simple_show_icon" />

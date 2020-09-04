@@ -6,6 +6,8 @@
 
     <string name="toast_false">جواب شما غلط است</string>
 
+    <string name="toast_cheat">تقلب کار قشنگی نیست</string>
+
     <string name="reset">شروع دوباره</string>
 
     <string name="question_australia">استرالیا بزرگ ترین قاره جهان است.</string>
@@ -15,5 +17,12 @@
     <string name="question_americas">کشور آمریکا پرجمعیت ترین کشور دنیا است.</string>
     <string name="question_asia">قاره آسیا در نیم کره جنوبی جهان واقع شده است.</string>
     <string name="score_is">score is :</string>
+    <string name="textView_cheat_warning">آیا برای نمایش تقلب اطمینان دارید ؟</string>
+    <string name="answer_is_true">درست</string>
+    <string name="answer_is_false">نادرست</string>
+    <string name="textView_change_q_size">تغییر سایز سوالات</string>
+    <string name="button_small">کوچک</string>
+    <string name="button_medium">متوسط</string>
+    <string name="button_large">بزرگ</string>
 
 </resources>
